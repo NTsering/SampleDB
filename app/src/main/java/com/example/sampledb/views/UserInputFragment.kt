@@ -65,7 +65,6 @@ class UserInputFragment : Fragment() {
 
         binding.buttonShowUsers.setOnClickListener {
             findNavController().navigate(R.id.action_userInputFragment_to_userListFragment)
-
         }
         return binding.root
     }
