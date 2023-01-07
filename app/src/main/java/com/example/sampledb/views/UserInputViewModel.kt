@@ -5,13 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampledb.db.User
+import com.example.sampledb.repo.DatabaseHelper
 import com.example.sampledb.repo.DatabaseHelperImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserInputViewModel : ViewModel() {
-    private val _text = MutableLiveData<String>("Hello")
-
-    lateinit var databaseHelperImpl: DatabaseHelperImpl
+@HiltViewModel
+class UserInputViewModel @Inject constructor(private val databaseHelper: DatabaseHelper) : ViewModel() {
+    private val _text = MutableLiveData("Hello")
 
     val text: LiveData<String>
         get() = _text
@@ -22,7 +24,7 @@ class UserInputViewModel : ViewModel() {
 
     fun insertUser(user: User) {
         viewModelScope.launch {
-            databaseHelperImpl.insert(user)
+            databaseHelper.insert(user)
         }
     }
 }

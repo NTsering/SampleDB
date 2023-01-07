@@ -5,17 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sampledb.db.User
-import com.example.sampledb.repo.DatabaseHelperImpl
+import com.example.sampledb.repo.DatabaseHelper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserListViewModel : ViewModel() {
+@HiltViewModel
+class UserListViewModel @Inject constructor(private val databaseHelper: DatabaseHelper) :
+    ViewModel() {
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>>
         get() = _users
-    lateinit var databaseHelperImpl: DatabaseHelperImpl
-    fun loadUsers() {
+
+    init {
         viewModelScope.launch {
-            _users.postValue(databaseHelperImpl.getUsers())
+            _users.postValue(databaseHelper.getUsers())
         }
     }
 }

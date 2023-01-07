@@ -1,6 +1,5 @@
 package com.example.sampledb.views
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,22 +11,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.sampledb.R
 import com.example.sampledb.databinding.FragmentUserInputBinding
-import com.example.sampledb.db.DatabaseBuilder
 import com.example.sampledb.db.User
-import com.example.sampledb.repo.DatabaseHelperImpl
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserInputFragment : Fragment() {
 
     //    private lateinit var viewModel: UserInputViewModel
     private lateinit var editText: EditText
     private val viewModel: UserInputViewModel by viewModels()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val appDatabase = DatabaseBuilder.getInstance(context)
-        val databaseHelperImpl = DatabaseHelperImpl(appDatabase)
-        viewModel.databaseHelperImpl = databaseHelperImpl
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
